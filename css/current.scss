@@ -1,0 +1,231 @@
+@import 'mixin';
+.current-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 70px;
+    box-sizing: border-box;
+    height: 100%;
+    .more{//버튼 ------------------------
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        top: 100%;
+        transform: translate(-50%, -50%);
+        font-size: 3em;
+        color: #FFF;
+        .minus{
+            display: none;
+        }
+        &.active{
+            .minus{display: block;}
+            .plus{display: none;}
+        }
+        &::before,&::after{
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 70px;
+            border-bottom: #FFF 1px solid;
+        }
+        &::before{
+            left: 100%;
+        }
+        &::after{
+            right: 100%;
+        }
+    }
+
+    .inner {
+        width: 90%;
+        //border: 1px solid salmon;
+        color: #fff;
+        .address {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }//address
+        .current-info{// 동그라미
+            position: relative;
+            background: rgba(#000, 0.5);
+            border-radius: 50%;
+            overflow: hidden;
+            &::before{
+                content: " ";
+                display: block;
+                padding-top: 100%;
+            }
+            .wrap{
+                @include pos-center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                width: 87%;
+                height: 87%;
+                border-radius: 50%;
+                text-align: center;
+                box-sizing: border-box;
+                padding: 20px;
+                .sun-set-rise{//일출, 일몰 반원
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    .circle{ //반원
+                        position: relative;
+                        overflow: hidden;
+                        width: 100%;
+                        height: 50%;
+                        &::before{
+                            content: " ";
+                            display: block;
+                            width: 100%;
+                            height: 200%;
+                            box-sizing: border-box;
+                            border-radius: 50%;
+                            border: rgba(255, 255, 0, 0.8) solid 3px;
+                        }
+                    }//circle
+                    time{
+                        position: absolute;
+                        top: 53%;
+                        &.sunrise{left: 0;}
+                        &.sunset{left: 100%;}
+                        transform: translateX(-50%);
+                        font-size: 0.85em;
+                        font-weight: 500;
+                        color: rgb(255, 250, 0);
+                        i{
+                            display: block;
+                        }
+                    }//time
+                    .sun{
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        width: 50%;
+                        height: 0;
+                        transform-origin: right center;
+                        //border-top: saddlebrown solid 1px ;
+                        i{
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            animation: sunA 1s infinite linear alternate;
+                            text-shadow: 0 0 2px rgba(255, 250, 0, 0.9);
+                            color: rgb(255, 255, 255);
+                            @keyframes sunA {
+                                0%{
+                                    transform: translate(-50%, -50%) scale(1) ;
+                                }
+                                100%{
+                                    transform: translate(-50%, -50%) scale(1.1) ;
+                                }
+                            }
+                        }//i
+                    }//sun
+                }//sun-set-rise
+                .temp-min-max{
+                    padding: 5px 15px;
+                    border-radius: 20px;
+                    background: rgba(255, 255, 255,0.2);//************
+                    b{
+                        margin: 0 3px;
+                        sup{
+                            vertical-align: bottom;
+                            margin-left: 3px;
+                        }
+                    }
+                }//temp-min-max
+                .temp{
+                    display: flex;
+                    align-items: center;
+                    margin: 15px 0;
+                    img{
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 50px;
+                        margin-right: 10px;
+                        box-shadow:  0 0 10px rgba(rgb(255, 255, 255), 0.3);
+                    }
+                    span{
+                        b{
+                            font-size: 3em;
+                        }
+                        sup{
+                            display: inline-block;
+                            transform: translateY(-50%);
+                        }
+                    }
+                }//temp
+                p.desc{
+                    font-size: 1.3em;
+                }
+                p.rain-snow{
+                    margin: 8px 0;
+                    padding: 5px 15px;
+                    border-radius: 20px;
+                    background-color: rgba(15, 81, 126, 0.5);
+                    >b{
+                        margin: 0 10px;
+                        i{
+                            margin-right: 5px;
+                        }
+                        small{
+                            font-size: 0.7em;
+                        }
+                    }
+                }//p.rain-snow
+                p.wind{
+                    display: flex;
+
+                    >b{
+                        margin: 0 10px;
+                        &.wind-deg{
+                            display: flex;
+                            width: 25px;
+                            height: 25px;
+                            border-radius: 50%;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: rgba(15, 81, 126, 0.8);
+                            border: rgba(#FFF, 0.8) 1px solid;
+                            
+                        }
+                        &.wind-speed{
+                            i{
+                                margin-right: 5px;
+                            }
+                            small{
+                                font-size: 0.7em;
+                            }
+                        }
+                    }
+                }//p.wind
+            }//warp
+        }//.current-info
+        p.time{//풍향
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 80%;
+            text-align: center;
+            time{
+                display: block;
+                text-shadow: 1px 1px 0  #888;
+                &.hh-mm{
+                    font-size: 2.5em;
+                    small{
+                        transform: translateY(-80%);
+                    }
+                }
+                &.yy-dd{
+
+                }
+            }
+        }//p.time
+    }//inner
+} //.current-section
